@@ -23,7 +23,6 @@ function Checkout() {
 
       <div className="checkout__right">
         <Subtotal />
-        <h2>The subtotal will go here</h2>
       </div>
     </div>
   );
