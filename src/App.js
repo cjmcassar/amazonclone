@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Header from "../src/Components/Header";
 import Home from "../src/Components/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Checkout from "../src/Components/Checkout";
 import Login from "./Components/Login";
+import { auth } from "./firebase";
+import { useStateValue } from "./StateProvider";
 
 function App() {
+  const [{}, dispatch] = useStateValue();
+  // checks if the user is logged in
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      console.log("User is >>>", authUser);
+      if (authUser) {
+        dispatch({
+          type: "SET_USER",
+          user: authUser,
+        });
+      } else {
+        dispatch({
+          type: "SET_USER",
+          user: null,
+        });
+      }
+    });
+  }, []);
+
   return (
     // BEM
     <Router>
